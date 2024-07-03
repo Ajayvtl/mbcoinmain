@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+</head>
+
+<body>
+    <h1>Payment Page</h1>
+    <form id="paymentForm">
+        <label for="sender">Sender:</label>
+        <input type="text" id="sender" name="sender"><br><br>
+        <label for="receiver">Receiver:</label>
+        <input type="text" id="receiver" name="receiver"><br><br>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount"><br><br>
+        <button type="button" onclick="makePayment()">Pay Now</button>
+    </form>
+    <script>
+        async function makePayment() {
+            const sender = document.getElementById('sender').value;
+            const receiver = document.getElementById('receiver').value;
+            const amount = document.getElementById('amount').value;
+
+            const response = await fetch('/transaction/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sender, receiver, amount })
+            });
+            const data = await response.json();
+            console.log(data);
+        }
+    </script>
+</body>
+
+</html>
